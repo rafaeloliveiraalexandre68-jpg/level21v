@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leve21 — 21 passos para emagrecer de verdade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F4EA;
+    --paper:#FFFFFF;
+    --ink:#16241B;
+    --forest:#1F3D2B;
+    --leaf:#5C8C56;
+    --leaf-tint:#E3EBD9;
+    --citrus:#E2A23B;
+    --clay:#D9603B;
+    --clay-dark:#B8492A;
+    --line:rgba(22,36,27,0.12);
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img,svg{display:block; max-width:100%;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  h1,h2,h3{font-family:'Fraunces', serif; line-height:1.05; color:var(--forest); font-weight:600;}
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--leaf);
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:18px; height:1px; background:var(--leaf);
+  }
+  p{line-height:1.6;}
+  a{color:inherit;}
+
+  /* ---------- DOT PROGRESS (signature element) ---------- */
+  #dotrail{
+    position:fixed;
+    right:22px;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:50;
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+    padding:14px 8px;
+    background:rgba(255,255,255,0.55);
+    backdrop-filter:blur(6px);
+    border-radius:20px;
+  }
+  #dotrail .dot{
+    width:6px; height:6px; border-radius:50%;
+    background:rgba(31,61,43,0.18);
+    transition:background .25s ease, transform .25s ease;
+  }
+  #dotrail .dot.on{background:var(--leaf); transform:scale(1.5);}
+  #dotrail .daylabel{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    color:var(--forest);
+    text-align:center;
+    margin-bottom:4px;
+    opacity:0.7;
+  }
+  @media (max-width: 880px){ #dotrail{display:none;} }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:40;
+    background:rgba(247,244,234,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .inner{
+    max-width:var(--maxw); margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Fraunces', serif; font-weight:700; font-size:20px; color:var(--forest);
+  }
+  .logo .leafmark{width:26px; height:26px;}
+  nav .navcta{
+    background:var(--forest); color:var(--bg);
+    padding:10px 20px; border-radius:100px;
+    font-size:14px; font-weight:600;
+    text-decoration:none;
+    transition:background .2s ease;
+  }
+  nav .navcta:hover{background:var(--clay);}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    padding:84px 0 70px;
+    position:relative;
+  }
+  .hero .inner{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:60px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(38px, 5vw, 62px);
+    letter-spacing:-0.01em;
+    margin-bottom:22px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--clay);
+  }
+  .hero p.lead{
+    font-size:18px;
+    color:rgba(22,36,27,0.78);
+    max-width:480px;
+    margin-bottom:32px;
+  }
+  .ctabtn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--clay);
+    color:#fff;
+    padding:17px 30px;
+    border-radius:100px;
+    font-weight:700;
+    font-size:16px;
+    text-decoration:none;
+    box-shadow:0 10px 26px rgba(217,96,59,0.32);
+    transition:transform .18s ease, box-shadow .18s ease;
+    border:none;
+    cursor:pointer;
+  }
+  .ctabtn:hover{transform:translateY(-2px); box-shadow:0 14px 30px rgba(217,96,59,0.4);}
+  .ctabtn .price{
+    font-family:'JetBrains Mono', monospace;
+    background:rgba(255,255,255,0.22);
+    padding:3px 9px;
+    border-radius:6px;
+    font-size:13px;
+  }
+  .microcopy{
+    margin-top:14px;
+    font-size:13px;
+    color:rgba(22,36,27,0.55);
+  }
+
+  /* hero leaf illustration */
+  .heroart{position:relative; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;}
+  .heroart svg{width:100%; height:100%;}
+
+  /* trust strip */
+  .trust{
+    display:flex; gap:34px; flex-wrap:wrap;
+    margin-top:54px;
+    padding-top:28px;
+    border-top:1px solid var(--line);
+  }
+  .trust .item{display:flex; align-items:baseline; gap:8px;}
+  .trust .num{font-family:'Fraunces', serif; font-size:26px; color:var(--forest); font-weight:600;}
+  .trust .lbl{font-size:13px; color:rgba(22,36,27,0.6);}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:90px 0;}
+  .sectionhead{max-width:640px; margin-bottom:52px;}
+  .sectionhead h2{font-size:clamp(30px,3.4vw,42px); margin-top:14px;}
+  .sectionhead p{color:rgba(22,36,27,0.68); margin-top:14px; font-size:16.5px;}
+
+  /* ---------- PROBLEM ---------- */
+  .problem{background:var(--forest); color:var(--bg);}
+  .problem .eyebrow{color:var(--citrus);}
+  .problem .eyebrow::before{background:var(--citrus);}
+  .problem .sectionhead h2{color:var(--bg);}
+  .problem .sectionhead p{color:rgba(247,244,234,0.7);}
+  .probgrid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1px;
+    background:rgba(247,244,234,0.14);
+    border-radius:18px;
+    overflow:hidden;
+  }
+  .probcard{
+    background:var(--forest);
+    padding:34px;
+  }
+  .probcard h3{color:var(--bg); font-size:21px; margin-bottom:10px;}
+  .probcard p{color:rgba(247,244,234,0.65); font-size:15px;}
+  .probcard .x{
+    width:34px; height:34px; border-radius:50%;
+    border:1.5px solid rgba(247,244,234,0.4);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:18px;
+    font-family:'JetBrains Mono', monospace;
+    color:var(--citrus);
+    font-size:14px;
+  }
+  .philosophy{
+    margin-top:30px;
+    padding:28px 32px;
+    border:1px solid rgba(247,244,234,0.25);
+    border-radius:16px;
+    display:flex;
+    gap:18px;
+    align-items:flex-start;
+  }
+  .philosophy p{color:var(--bg); font-size:16px;}
+  .philosophy strong{color:var(--citrus);}
+
+  /* ---------- METHOD (3 steps) ---------- */
+  .method .steps{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:26px;
+  }
+  .stepcard{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:32px 26px;
+    position:relative;
+  }
+  .stepcard .stepnum{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--leaf);
+    background:var(--leaf-tint);
+    display:inline-block;
+    padding:4px 10px;
+    border-radius:6px;
+    margin-bottom:18px;
+  }
+  .stepcard h3{font-size:21px; margin-bottom:10px;}
+  .stepcard p{font-size:14.5px; color:rgba(22,36,27,0.65);}
+  .stepcard .stat{
+    margin-top:18px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--clay);
+    border-top:1px dashed var(--line);
+    padding-top:14px;
+  }
+
+  /* ---------- INSIDE / FEATURES ---------- */
+  .inside{background:var(--leaf-tint);}
+  .insidegrid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:2px;
+    background:var(--line);
+    border-radius:18px;
+    overflow:hidden;
+  }
+  .featcard{
+    background:var(--bg);
+    padding:30px 26px;
+    min-height:170px;
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .featcard .ico{
+    width:38px; height:38px;
+    display:flex; align-items:center; justify-content:center;
+    border-radius:10px;
+    background:var(--forest);
+    color:var(--bg);
+    font-size:18px;
+  }
+  .featcard h4{font-family:'Fraunces', serif; font-size:17.5px; color:var(--forest); font-weight:600;}
+  .featcard p{font-size:13.5px; color:rgba(22,36,27,0.62);}
+
+  /* ---------- RECIPES ---------- */
+  .recipes .cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+  }
+  .reccard{
+    background:var(--paper);
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .recart{
+    height:150px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:46px;
+  }
+  .recart.b{background:linear-gradient(135deg,#FDF1D6,#F3DFA2);}
+  .recart.l{background:linear-gradient(135deg,#E6EFDC,#C9DDB6);}
+  .recart.d{background:linear-gradient(135deg,#E4ECF0,#C3D7DF);}
+  .recbody{padding:22px 22px 26px;}
+  .recbody .tag{font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--leaf); text-transform:uppercase; letter-spacing:0.08em;}
+  .recbody h3{font-size:19px; margin:8px 0 8px;}
+  .recbody p{font-size:14px; color:rgba(22,36,27,0.62);}
+
+  /* ---------- MISTAKES ---------- */
+  .mistakes .list{display:flex; flex-direction:column;}
+  .mrow{
+    display:grid;
+    grid-template-columns:90px 1fr 1fr;
+    gap:24px;
+    align-items:center;
+    padding:26px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .mrow:first-child{border-top:1px solid var(--line);}
+  .mrow .mtag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--clay);
+    background:#FBE7DD;
+    padding:5px 10px;
+    border-radius:6px;
+    width:fit-content;
+  }
+  .mrow h4{font-family:'Fraunces', serif; font-size:18px; color:var(--forest); font-weight:600;}
+  .mrow p{font-size:14px; color:rgba(22,36,27,0.62);}
+  @media (max-width:720px){ .mrow{grid-template-columns:1fr; gap:8px;} }
+
+  /* ---------- TRACKER STRIP (signature callback) ---------- */
+  .tracker{
+    background:var(--forest);
+    border-radius:24px;
+    padding:46px 40px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:center;
+  }
+  .tracker h3{color:var(--bg); font-size:26px; margin-bottom:12px;}
+  .tracker p{color:rgba(247,244,234,0.7); font-size:15px;}
+  .trackdots{display:grid; grid-template-columns:repeat(7,1fr); gap:8px;}
+  .trackdots span{
+    aspect-ratio:1/1; border-radius:50%;
+    background:rgba(247,244,234,0.14);
+  }
+  .trackdots span.filled{background:var(--citrus);}
+  @media (max-width:780px){ .tracker{grid-template-columns:1fr;} }
+
+  /* ---------- PRICING ---------- */
+  .pricing{text-align:center;}
+  .pricecard{
+    max-width:480px;
+    margin:0 auto;
+    background:var(--paper);
+    border:2px solid var(--forest);
+    border-radius:24px;
+    padding:46px 38px;
+    position:relative;
+  }
+  .pricecard .badge{
+    position:absolute; top:-14px; left:50%; transform:translateX(-50%);
+    background:var(--clay); color:#fff;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase;
+    padding:6px 16px; border-radius:100px;
+  }
+  .pricecard .amount{
+    font-family:'Fraunces', serif;
+    font-size:56px;
+    color:var(--forest);
+    margin:18px 0 4px;
+  }
+  .pricecard .amount sup{font-size:22px; top:-22px;}
+  .pricecard .was{
+    font-family:'JetBrains Mono', monospace;
+    color:rgba(22,36,27,0.4);
+    text-decoration:line-through;
+    font-size:14px;
+  }
+  .pricecard ul{list-style:none; text-align:left; margin:28px 0 30px; display:flex; flex-direction:column; gap:12px;}
+  .pricecard li{font-size:14.5px; display:flex; gap:10px; align-items:flex-start;}
+  .pricecard li::before{content:"✓"; color:var(--leaf); font-weight:700;}
+  .guarantee{
+    margin-top:22px;
+    font-size:13px;
+    color:rgba(22,36,27,0.55);
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq .qa{border-top:1px solid var(--line);}
+  .qrow{padding:24px 0; border-bottom:1px solid var(--line); cursor:pointer;}
+  .qrow summary{
+    list-style:none;
+    font-family:'Fraunces', serif;
+    font-size:18px;
+    color:var(--forest);
+    font-weight:600;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .qrow summary::-webkit-details-marker{display:none;}
+  .qrow summary::after{content:"+"; font-size:22px; color:var(--leaf); font-family:'JetBrains Mono', monospace;}
+  .qrow[open] summary::after{content:"–";}
+  .qrow .a{margin-top:12px; font-size:14.5px; color:rgba(22,36,27,0.65); max-width:620px;}
+
+  /* ---------- FOOTER CTA ---------- */
+  .finalcta{
+    background:var(--forest);
+    border-radius:28px;
+    padding:64px 40px;
+    text-align:center;
+  }
+  .finalcta h2{color:var(--bg); font-size:clamp(28px,3.6vw,42px); margin-bottom:16px;}
+  .finalcta p{color:rgba(247,244,234,0.7); max-width:480px; margin:0 auto 30px;}
+
+  footer{padding:50px 0 70px;}
+  .footgrid{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px;}
+  .disclaimer{
+    margin-top:34px; padding-top:24px; border-top:1px solid var(--line);
+    font-size:12px; color:rgba(22,36,27,0.5); max-width:780px; line-height:1.6;
+  }
+
+  @media (max-width:880px){
+    .hero .inner{grid-template-columns:1fr;}
+    .heroart{order:-1; max-width:280px; margin:0 auto;}
+    .probgrid, .insidegrid, .recipes .cards, .method .steps{grid-template-columns:1fr;}
+    .mrow{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div id="dotrail" aria-hidden="true">
+  <div class="daylabel">21</div>
+</div>
+
+<nav>
+  <div class="inner">
+    <div class="logo">
+      <svg class="leafmark" viewBox="0 0 40 40" fill="none">
+        <path d="M20 4C12 6 6 14 6 22c0 6 4 10 10 10 9 0 16-9 18-26C26 8 22 4 20 4Z" fill="#5C8C56"/>
+        <path d="M9 31 20 4" stroke="#1F3D2B" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      Leve21
+    </div>
+    <a class="navcta" href="#comprar">Quero começar</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap inner">
+    <div class="herotext">
+      <div class="eyebrow">Guia prático · 21 passos</div>
+      <h1>Emagrecer de verdade não é sobre <em>força de vontade.</em><br>É sobre sistema.</h1>
+      <p class="lead">O Leve21 é o guia direto ao ponto para perder peso com consistência — sem dietas malucas, sem promessas mirabolantes, sem efeito sanfona. 21 passos simples que cabem na sua rotina real.</p>
+      <a href="#comprar" class="ctabtn">Quero meu plano <span class="price">R$ 37</span></a>
+      <div class="microcopy">Acesso imediato em PDF · Leitura em ~40 minutos · Pagamento único</div>
+
+      <div class="trust">
+        <div class="item"><span class="num">21</span><span class="lbl">passos práticos</span></div>
+        <div class="item"><span class="num">0,5–1kg</span><span class="lbl">de meta semanal realista</span></div>
+        <div class="item"><span class="num">3</span><span class="lbl">receitas prontas pra hoje</span></div>
+      </div>
+    </div>
+
+    <div class="heroart">
+      <svg viewBox="0 0 360 360" fill="none">
+        <circle cx="180" cy="180" r="160" fill="#E3EBD9"/>
+        <path d="M180 60c-50 14-86 56-86 100 0 32 22 54 54 54 50 0 88-48 100-140-28-10-50-18-68-14Z" fill="#5C8C56"/>
+        <path d="M100 224 180 60" stroke="#1F3D2B" stroke-width="3" stroke-linecap="round"/>
+        <text x="180" y="205" text-anchor="middle" font-family="Fraunces, serif" font-size="86" font-weight="700" fill="#1F3D2B">21</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<section class="problem">
+  <div class="wrap">
+    <div class="sectionhead">
+      <div class="eyebrow">O problema</div>
+      <h2>Por que a maioria das dietas falha</h2>
+      <p>Não é falta de disciplina. É que o método nunca foi feito pra durar.</p>
+    </div>
+    <div class="probgrid">
+      <div class="probcard">
+        <div class="x">✕</div>
+        <h3>Promessas impossíveis</h3>
+        <p>Dietas restritivas prometem resultado rápido — e entregam privação, compulsão e abandono em poucas semanas.</p>
+      </div>
+      <div class="probcard">
+        <div class="x">✕</div>
+        <h3>Falta de consistência</h3>
+        <p>Sem uma rotina que cabe na vida real, o peso volta. É o efeito sanfona que todo mundo já viveu pelo menos uma vez.</p>
+      </div>
+    </div>
+    <div class="philosophy">
+      <div style="font-size:22px;">💡</div>
+      <p><strong>A filosofia Leve21:</strong> simplicidade, consistência e resultado real. Pequenas mudanças diárias que duram para sempre — não 21 dias de sofrimento.</p>
+    </div>
+  </div>
+</section>
+
+<section class="method">
+  <div class="wrap">
+    <div class="sectionhead">
+      <div class="eyebrow">O método</div>
+      <h2>Um começo bem planejado vale mais que motivação</h2>
+      <p>Metas realistas evitam frustração e mantêm o foco no longo prazo. É assim que o Leve21 começa.</p>
+    </div>
+    <div class="steps">
+      <div class="stepcard">
+        <span class="stepnum">PASSO 01</span>
+        <h3>Defina a meta</h3>
+        <p>Nada de prazos irreais. Você aprende a definir um ritmo de perda de peso que o corpo aguenta sustentar.</p>
+        <div class="stat">→ 0,5–1kg por semana</div>
+      </div>
+      <div class="stepcard">
+        <span class="stepnum">PASSO 02</span>
+        <h3>Calcule suas calorias</h3>
+        <p>Um passo a passo simples pra entender sua necessidade calórica diária — sem planilha complicada.</p>
+        <div class="stat">→ Necessidade personalizada</div>
+      </div>
+      <div class="stepcard">
+        <span class="stepnum">PASSO 03</span>
+        <h3>Monte sua rotina</h3>
+        <p>Um plano de refeições consistente, fácil de repetir, pra você não precisar decidir tudo do zero todo dia.</p>
+        <div class="stat">→ Plano semanal pronto</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="inside">
+  <div class="wrap">
+    <div class="sectionhead">
+      <div class="eyebrow">O que tem dentro</div>
+      <h2>Dicas práticas que você aplica ainda hoje</h2>
+      <p>Sem teoria. Cada página do guia vira um hábito real.</p>
+    </div>
+    <div class="insidegrid">
+      <div class="featcard">
+        <div class="ico">🥚</div>
+        <h4>Priorize proteínas</h4>
+        <p>Em todas as refeições, pra saciar e preservar massa muscular.</p>
+      </div>
+      <div class="featcard">
+        <div class="ico">🚫</div>
+        <h4>Reduza ultraprocessados</h4>
+        <p>Menos calorias vazias, mais energia real ao longo do dia.</p>
+      </div>
+      <div class="featcard">
+        <div class="ico">💧</div>
+        <h4>2 litros de água por dia</h4>
+        <p>Hidratação certa controla o apetite e ajuda o metabolismo.</p>
+      </div>
+      <div class="featcard">
+        <div class="ico">😴</div>
+        <h4>7 a 8 horas de sono</h4>
+        <p>Dormir bem regula os hormônios da fome — parte do método, não detalhe.</p>
+      </div>
+      <div class="featcard">
+        <div class="ico">📦</div>
+        <h4>Meal prep semanal</h4>
+        <p>Planeje uma vez, evite decisões ruins na correria do dia a dia.</p>
+      </div>
+      <div class="featcard">
+        <div class="ico">📱</div>
+        <h4>Tecnologia como apoio</h4>
+        <p>Indicações de apps para contar calorias, treinar e acompanhar o peso.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="recipes">
+  <div class="wrap">
+    <div class="sectionhead">
+      <div class="eyebrow">Bônus</div>
+      <h2>3 receitas práticas pra começar hoje</h2>
+      <p>Direto do guia — sem ingrediente difícil de achar, sem panela especial.</p>
+    </div>
+    <div class="cards">
+      <div class="reccard">
+        <div class="recart b">🍳</div>
+        <div class="recbody">
+          <span class="tag">Café da manhã</span>
+          <h3>Omelete proteico</h3>
+          <p>Claras com espinafre e queijo cottage. Rápido, leve e cheio de proteína.</p>
+        </div>
+      </div>
+      <div class="reccard">
+        <div class="recart l">🍗</div>
+        <div class="recbody">
+          <span class="tag">Almoço</span>
+          <h3>Frango grelhado</h3>
+          <p>Arroz integral e brócolis no vapor — proteína, carboidrato e fibra em equilíbrio.</p>
+        </div>
+      </div>
+      <div class="reccard">
+        <div class="recart d">🥗</div>
+        <div class="recbody">
+          <span class="tag">Jantar</span>
+          <h3>Salada de atum</h3>
+          <p>Grão-de-bico e azeite. Leve, nutritiva e pronta em minutos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mistakes">
+  <div class="wrap">
+    <div class="sectionhead">
+      <div class="eyebrow">Atenção</div>
+      <h2>Os erros que travam o emagrecimento</h2>
+      <p>O guia mostra como evitar as armadilhas mais comuns — inclusive as que parecem "saudáveis".</p>
+    </div>
+    <div class="list">
+      <div class="mrow">
+        <span class="mtag">ERRO</span>
+        <h4>Cortar calorias demais</h4>
+        <p>Gera deficiência nutricional e prepara o terreno pro efeito sanfona.</p>
+      </div>
+      <div class="mrow">
+        <span class="mtag">ERRO</span>
+        <h4>Ignorar a musculação</h4>
+        <p>Sem exercício de resistência, quem some é o músculo — não a gordura.</p>
+      </div>
+      <div class="mrow">
+        <span class="mtag">ERRO</span>
+        <h4>Negligenciar sono e estresse</h4>
+        <p>Cortisol alto sabota até o esforço alimentar mais disciplinado.</p>
+      </div>
+      <div class="mrow">
+        <span class="mtag">ERRO</span>
+        <h4>Pular refeições</h4>
+        <p>Aumenta a fome, piora as escolhas e desacelera o metabolismo.</p>
+      </div>
+    </div>
+
+    <div class="tracker" style="margin-top:60px;">
+      <div>
+        <h3>Acompanhe seu progresso, não a perfeição</h3>
+        <p>Fotos, medidas e peso semanal mostram a evolução real — mesmo quando a balança parece parada. Cada pequena vitória diária é combustível pra continuar.</p>
+      </div>
+      <div class="trackdots" id="trackdots"></div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="comprar">
+  <div class="wrap">
+    <div class="sectionhead" style="margin:0 auto 50px;">
+      <div class="eyebrow" style="justify-content:center;">Comece hoje</div>
+      <h2>Tudo que você precisa pra emagrecer sem complicação</h2>
+    </div>
+    <div class="pricecard">
+      <span class="badge">Acesso vitalício</span>
+      <div class="was">R$ 67</div>
+      <div class="amount"><sup>R$</sup>37</div>
+      <p style="color:rgba(22,36,27,0.55); font-size:13px;">pagamento único</p>
+      <ul>
+        <li>Guia completo Leve21 em PDF (21 passos)</li>
+        <li>3 receitas práticas prontas para usar</li>
+        <li>Checklist de erros comuns a evitar</li>
+        <li>Indicações de apps de acompanhamento</li>
+        <li>Atualizações futuras incluídas</li>
+      </ul>
+      <a href="#" class="ctabtn" style="width:100%; justify-content:center;">Quero o Leve21 agora</a>
+      <div class="guarantee">🔒 Garantia de 7 dias — não gostou, devolvemos seu dinheiro</div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap">
+    <div class="sectionhead">
+      <div class="eyebrow">Dúvidas</div>
+      <h2>Perguntas frequentes</h2>
+    </div>
+    <div class="qa">
+      <details class="qrow">
+        <summary>Funciona pra qualquer pessoa?</summary>
+        <p class="a">O Leve21 foi pensado pra quem quer começar com hábitos simples e sustentáveis. Se você tem alguma condição de saúde específica, vale conversar com um profissional antes de iniciar qualquer mudança alimentar.</p>
+      </details>
+      <details class="qrow">
+        <summary>Preciso de academia?</summary>
+        <p class="a">Não. O guia foca principalmente em alimentação e rotina. Ele recomenda incluir exercícios de resistência, mas você adapta ao que tiver disponível — academia, casa ou ar livre.</p>
+      </details>
+      <details class="qrow">
+        <summary>Em quanto tempo vejo resultado?</summary>
+        <p class="a">O método trabalha com uma meta realista de 0,5 a 1kg por semana. Resultado consistente vem da rotina, não de promessas de emagrecimento relâmpago.</p>
+      </details>
+      <details class="qrow">
+        <summary>E se eu não gostar?</summary>
+        <p class="a">Você tem 7 dias de garantia a partir da compra. Se não fizer sentido pra você, devolvemos o valor sem perguntas.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="finalcta">
+      <h2>Um dia de cada vez. Um passo de cada vez.</h2>
+      <p>Emagrecer de verdade não é sobre perfeição — é sobre consistência. O Leve21 está com você em cada etapa dessa jornada. 💚</p>
+      <a href="#comprar" class="ctabtn">Quero começar agora <span class="price">R$ 37</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footgrid">
+      <div class="logo">
+        <svg class="leafmark" viewBox="0 0 40 40" fill="none">
+          <path d="M20 4C12 6 6 14 6 22c0 6 4 10 10 10 9 0 16-9 18-26C26 8 22 4 20 4Z" fill="#5C8C56"/>
+        </svg>
+        Leve21
+      </div>
+      <p style="font-size:13px; color:rgba(22,36,27,0.55); max-width:320px;">Simplicidade, consistência e resultado real. Pequenas mudanças diárias que duram para sempre.</p>
+    </div>
+    <div class="disclaimer">
+      Este material tem caráter educativo e não substitui orientação de nutricionista, médico ou educador físico. Resultados de emagrecimento variam de pessoa para pessoa. Antes de iniciar qualquer mudança significativa na alimentação ou rotina de exercícios, especialmente se você tiver alguma condição de saúde pré-existente, converse com um profissional qualificado.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Signature element: 21-dot rail that fills as the page scrolls,
+  // echoing the "Leve21 / 21 steps" idea and the in-guide habit tracker.
+  const rail = document.getElementById('dotrail');
+  const TOTAL = 21;
+  for(let i=0;i<TOTAL;i++){
+    const d = document.createElement('div');
+    d.className = 'dot';
+    rail.appendChild(d);
+  }
+  const dots = rail.querySelectorAll('.dot');
+
+  function updateRail(){
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = Math.min(1, Math.max(0, scrollTop / docHeight));
+    const active = Math.round(pct * TOTAL);
+    dots.forEach((d, i) => {
+      d.classList.toggle('on', i < active);
+    });
+  }
+  window.addEventListener('scroll', updateRail, {passive:true});
+  updateRail();
+
+  // small 14-dot tracker visual (7 filled, like a partial week)
+  const track = document.getElementById('trackdots');
+  for(let i=0;i<14;i++){
+    const s = document.createElement('span');
+    if(i % 2 === 0) s.classList.add('filled');
+    track.appendChild(s);
+  }
+</script>
+
+</body>
+</html>
